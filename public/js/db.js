@@ -20,7 +20,7 @@ db.collection('recipes').onSnapshot((snapshot) =>{
             renderRecipe(change.doc.data(),change.doc.id)
         }
         if(change.type === 'removed'){
-
+            removeRecipe(change.doc.id)
         }
     })
 })
@@ -40,4 +40,15 @@ form.addEventListener('submit',evt =>{
 
     form.title.value = ''
     form.ingredients.value = ''
+})
+
+//delete a recepe
+const recipeContainer = document.querySelector('.recipes')
+recipeContainer.addEventListener('click',evt => {
+    //console.log(evt);
+    if(evt.target.innerHTML === 'delete_outline'){
+        const id = evt.target.getAttribute('data-id')
+        db.collection('recipes').doc(id).delete()
+    }
+
 })
